@@ -1,2 +1,1 @@
 # zxc
-for study
