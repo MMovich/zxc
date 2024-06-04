@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net" modified="2024-05-20T17:34:44.578Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="7xB3vnllUKIuPY8T60YT" version="24.4.4" type="device">
+  <diagram name="Страница — 1" id="j_UeKqDn10rYCSVlCiXF">
+    <mxGraphModel dx="5239" dy="3034" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mspgfQ14eNfCmWpK82fX-2" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;2.ОБЪЯВИТЬ ПЕРЕМЕННУЮ КОЛИЧЕСТВО ВОШЕДШИХ И ПЕРЕМЕННУЮ КОЛИЧЕСТВО ВЫШЕДШИХ. &lt;br&gt;3.ЕСЛИ ПСЕВДО-ЧЕЛОВЕК ПОЯВИЛСЯ, ТО РАСПОЗНАТЬ ЛИЦО.&lt;/font&gt;&lt;div style=&quot;font-size: 27px;&quot;&gt;&lt;font style=&quot;font-size: 27px;&quot;&gt;ОПОЗНАНИЕ ЛИЦА И ПРИСВОЕНИЯ ФАКТА ТОГО, ЧТО ЭТО ЧЕЛОВЕК, А НЕ ЧТО-ТО ДРУГОЕ.&lt;/font&gt;&lt;br&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="130" y="-860" width="540" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-8" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.003;entryY=0.446;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.98;exitY=0.355;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-1" target="mspgfQ14eNfCmWpK82fX-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="-50" as="sourcePoint" />
+            <mxPoint x="460" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-13" value="&lt;font style=&quot;font-size: 37px;&quot;&gt;4. создается и привязывается к какой-то координате лица координата объекта человек.&lt;br&gt;5. ЕСЛИ КООРДИНАТА-ЧЕЛОВЕКА ПЕРЕСЕКЛА &quot;ПИКСЕЛЬНУЮ ЛИНИЮ&quot; (ЭТО КОНСТАНТА?), ТО СЧИТАЕТСЯ ЧТО ЧЕЛ ВОШЕЛ И ОТПРАВЛЯЕТСЯ СИГНАЛ НА САЙТ&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="-280" width="770" height="770" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-14" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.001;exitY=0.399;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-13" target="mspgfQ14eNfCmWpK82fX-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-100" y="-120" as="sourcePoint" />
+            <mxPoint x="-50" y="-170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-15" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-2" target="mspgfQ14eNfCmWpK82fX-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-100" y="-120" as="sourcePoint" />
+            <mxPoint x="-50" y="-170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-16" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
+          <mxGeometry x="-840" y="-900" width="1540" height="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-3" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;КАМЕРА&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="mspgfQ14eNfCmWpK82fX-16">
+          <mxGeometry x="100" y="1100" width="220" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-1" value="&lt;font style=&quot;font-size: 31px;&quot;&gt;1.Пока не появится псевдо-человек, никакой сигнал не отправляется с камеры на плату распбери. Иначе, если появился пчевдо-чел, то фидбек-сигнал на плату и там этот&amp;nbsp;&lt;/font&gt;&lt;div style=&quot;font-size: 31px;&quot;&gt;&lt;font style=&quot;font-size: 31px;&quot;&gt;&lt;font style=&quot;font-size: 31px;&quot;&gt;сигнал-объект обрабатывается алгоритмом распознавания человека.&lt;br&gt;Если псевдо-человек распознан, то попытаться распознать лицо&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;(то есть что это именно человек, а не что-то другое)&lt;/span&gt;&lt;font style=&quot;background-color: initial; font-size: 31px;&quot;&gt;, иначе ничего не делать и продолжать отправлять сигнал на камеру пока не появится псевдо-человек.&lt;/font&gt;&lt;font style=&quot;background-color: initial; font-size: 31px;&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="mspgfQ14eNfCmWpK82fX-16">
+          <mxGeometry x="40" y="9" width="672" height="672" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.914;exitY=0.815;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.53;entryY=1.014;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="mspgfQ14eNfCmWpK82fX-16" source="mspgfQ14eNfCmWpK82fX-3" target="mspgfQ14eNfCmWpK82fX-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1250" y="1070" as="sourcePoint" />
+            <mxPoint x="1300" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-7" value="&lt;font style=&quot;font-size: 31px;&quot;&gt;ЕСЛИ ПСЕВДО-ЧЕЛОВЕКА&lt;br&gt;НАШЛА, ТО ОТПРАВИТЬ&lt;br&gt;СКРИНШОТ-СОБЫТИЕ&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-4">
+          <mxGeometry x="0.0372" y="1" relative="1" as="geometry">
+            <mxPoint x="2" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.034;entryY=0.304;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="mspgfQ14eNfCmWpK82fX-16" source="mspgfQ14eNfCmWpK82fX-1" target="mspgfQ14eNfCmWpK82fX-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1250" y="1070" as="sourcePoint" />
+            <mxPoint x="1300" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-6" value="&lt;font style=&quot;font-size: 34px;&quot;&gt;ИСКАТЬ&lt;br&gt;ПСЕВДО-&lt;br&gt;ЧЕЛОВЕКА&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-5">
+          <mxGeometry x="-0.0176" y="-2" relative="1" as="geometry">
+            <mxPoint x="42" y="-46" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-11" value="Text" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-5">
+          <mxGeometry x="0.6971" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-23" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-1120" y="510" as="sourcePoint" />
+            <mxPoint x="-1120" y="-210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-24" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=-0.001;exitY=0.265;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-80" y="440" as="sourcePoint" />
+            <mxPoint x="-1150" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-25" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=11.666666666666668;endSize=24.983333333333334;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="mspgfQ14eNfCmWpK82fX-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-1120" y="-190" as="sourcePoint" />
+            <mxPoint x="-880" y="-790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-35" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;в начало алгоритма&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-25">
+          <mxGeometry x="-0.0437" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-27" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-1460" y="560.2222222222217" as="sourcePoint" />
+            <mxPoint x="-1460" y="579.7777777777783" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.015;exitY=0.656;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.962;entryY=0.315;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-13" target="mspgfQ14eNfCmWpK82fX-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-240" y="120" as="sourcePoint" />
+            <mxPoint x="-190" y="70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-33" value="&lt;span style=&quot;font-size: 36px;&quot;&gt;Первое значение&lt;br&gt;коодинаты&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-30">
+          <mxGeometry x="-0.0572" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-31" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.127;entryY=0.829;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-3" target="mspgfQ14eNfCmWpK82fX-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-290" y="170" as="sourcePoint" />
+            <mxPoint x="-240" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-34" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;СЛЕДУЮЩЕЕ ЗНАЧЕНИЕ&lt;br&gt;КООРДИНАТЫ&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-31">
+          <mxGeometry x="-0.2956" y="2" relative="1" as="geometry">
+            <mxPoint x="64" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-17" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;ВСЕ ТОЖЕ САМОЕ ТОЛЬКО СО ВТОРОЙ КАМЕРОЙ&lt;/span&gt;&lt;br&gt;&lt;/font&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="-413" y="540" width="520" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-20" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.415;entryY=0;entryDx=0;entryDy=0;exitX=0.415;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-16" target="mspgfQ14eNfCmWpK82fX-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="110" y="570" as="sourcePoint" />
+            <mxPoint x="160" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-37" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.001;exitY=0.524;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.003;entryY=0.41;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-13" target="mspgfQ14eNfCmWpK82fX-39">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="-70" as="sourcePoint" />
+            <mxPoint x="1080" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-38" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;СИГНАЛ НА САЙТ&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-37">
+          <mxGeometry x="-0.0081" y="5" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-39" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;САЙТ С&lt;br&gt;2 СЧЕТЧИКАМИ:&lt;br&gt;&lt;br&gt;СКОЛЬКО ЧЕЛОВ ЗАШЛО(КАМЕРА 1) И ВЫШЛО(КАМЕРА 2)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="-120" width="580" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-41" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.172;entryY=0.88;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mspgfQ14eNfCmWpK82fX-17" target="mspgfQ14eNfCmWpK82fX-39">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="581" y="133" as="sourcePoint" />
+            <mxPoint x="1143" y="163" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mspgfQ14eNfCmWpK82fX-42" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;СИГНАЛ НА САЙТ&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="mspgfQ14eNfCmWpK82fX-41">
+          <mxGeometry x="-0.0081" y="5" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
