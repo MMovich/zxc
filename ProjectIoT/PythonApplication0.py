@@ -1,7 +1,21 @@
 # подключаем библиотеку компьютерного зрения 
 import cv2
 import scipy.spatial.distance
-#from flask import Flask, render_template, Response
+#from flask import Flask
+
+#app = Flask(__name__)
+
+#counter = 0
+
+#@app.route('/')
+#def home():
+#    global counter
+#    counter += 1
+#    return f'Counter: {counter}'
+
+#if __name__ == '__main__':
+#    app.run()
+
 print(cv2.__version__)
 #Условимся, что лицо не может двигаться по "наблюдаемой" "площади" 10х10 метров
 #быстрее чем 300м/с, а само лицо условно покажется за 3 секунды на камере 90 раз
@@ -22,46 +36,53 @@ print(cv2.__version__)
 #контейнер для работы с лицами
 faceBoxes={}
 #для очистки массива
-def del_faces_from_Box():
-    print("YDALENIE")
-    for i in range(len(faceBoxes)):
-        del faceBoxes[i]
-        print("Chel udalen iz mass ", i)
 
 #если координата ниже черты в новом кадре, то чел прошёл вниз
-def chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik):
-    if (Xcentroid * frameHeight * 0.15 - Xcentroid * frameHeight * 0.85 + Ycentroid * frameWidth - frameWidth * frameHeight * 0.15 >= 0):
+def chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy):
+    boolean1 = 0.7 * Xcentroid * frameHeight - Ycentroid * frameWidth + 0.15 * frameHeight * frameWidth <= 0
+    boolean2 = 0.7 * xxx * frameHeight - yyy * frameWidth + 0.15 * frameHeight * frameWidth > 0
+    #если точка была в предыдущем кадре выше прямой, а в текущем находится ниже прямой = прошла черту
+    if boolean1 and boolean2:
         schetchik += 1
         print("Proshel vniz!!! ", schetchik)
-    #return schetchik
-
-#если координата выше черты в новом кадре, то чел прошёл вверх
-def chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik):
-    if (Xcentroid * frameHeight * 0.15 - Xcentroid * frameHeight * 0.85 + Ycentroid * frameWidth - frameWidth * frameHeight * 0.15 < 0):
-        schetchik -= 1
-        print("Proshel vverh!!! ", schetchik)
     return schetchik
 
-#для поиска ближайшего(функция возвращает номер)
-def find_correct(Xcentroid,Ycentroid):
-    #массив дистанций
-    temp_d={}
-    #находим соседей(из предыдущего кадра) у новоявленного(из текущего кадра) лица(или лица, которое переместилось)
-    for i in range(len(faceBoxes)):
-        x, y = faceBoxes[i]
-        distance=float(scipy.spatial.distance.euclidean((x,y), (Xcentroid,Ycentroid)))
-        temp_d[i]=(distance)
-    
-    #номер элемента с минимальной дистанцией
-    min_d=int(0)
-    for i in range(len(temp_d)):
-        if temp_d[0] > temp_d[i]:
-            temp_d[0] = temp_d[i]
-            min_d=int(i)
+#если координата выше черты в новом кадре, то чел прошёл вверх
+#def chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik):
+#    if (Xcentroid * frameHeight * 0.15 - Xcentroid * frameHeight * 0.85 + Ycentroid * frameWidth - frameWidth * frameHeight * 0.15 < 0):
+#        schetchik -= 1
+#        print("Proshel vverh!!! ", schetchik)
+#    return schetchik
 
-    #faceBoxes[min_d] = (Xcentroid, Ycentroid)
-    print("it was the same face as in the previous frame ", min_d)
-    return min_d
+#для поиска ближайшего
+def find_correct(frameOpencvDnn, Xcentroid, Ycentroid, iteration_number = int(-1)):
+    #только запись в глобальный массив точки
+    if iteration_number > int(len(faceBoxes) - 1):
+        faceBoxes[iteration_number] = (Xcentroid, Ycentroid)
+        cv2.putText(frameOpencvDnn, str(iteration_number), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+        return Xcentroid, Ycentroid
+    else:
+        #массив дистанций
+        temp_d={}
+        #находим соседей(из предыдущего кадра) у новоявленного(из текущего кадра) лица(или лица, которое переместилось)
+        for i in range(len(faceBoxes)):
+            x, y = faceBoxes[i]
+            distance=float(scipy.spatial.distance.euclidean((x,y), (Xcentroid,Ycentroid)))
+            temp_d[i]=(distance)
+    
+        #номер элемента с минимальной дистанцией
+        min_d=int(0)
+        for i in range(len(temp_d)):
+            if temp_d[0] > temp_d[i]:
+                temp_d[0] = temp_d[i]
+                min_d=int(i)
+
+        
+        x, y = faceBoxes[min_d]
+        #print("it was the same face as in the previous frame ", min_d)
+        faceBoxes[min_d] = (Xcentroid, Ycentroid)
+        cv2.putText(frameOpencvDnn, str(min_d), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+        return x, y
 
 # функция определения лиц
 #net            - модель определения лиц
@@ -111,44 +132,38 @@ def highlightFace(net, frame, iii, schetchik, conf_threshold=0.7):
             Ycentroid=int((y1+y2)/2)
             # добавляем их в общую переменную
             TempfaceBoxes[i]=(Xcentroid,Ycentroid)
-            #TempfaceBoxes.append([Xcentroid,Ycentroid])
-            #если это не 1ый кадр, в котором нашли лицо а =>2 в котором также нашли лицо, то
-            #if iii > 0:
-            #    min_rad = int(find_correct(Xcentroid,Ycentroid))
-            #    chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik)
-            #    #schetchik = chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik)
-            #    faceBoxes[min_rad]=(Xcentroid,Ycentroid)
-            #    cv2.putText(frameOpencvDnn, str(min_rad), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2)
-            
-            ##для 1 кадра 
-            #else:
-            #    #контейнер для работы с лицами
-            #    faceBoxes[iii]=(Xcentroid,Ycentroid)
-            #    cv2.putText(frameOpencvDnn, str(iii), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2)
-            #    iii += 1
-            # рисуем рамку на кадре
-            #cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/300)), 8)
+            # рисуем точку на кадре
             cv2.circle(frameOpencvDnn, (Xcentroid, Ycentroid), 1, (0,255,0), 2)
-        #else:
-        #    del_faces_from_Box()
+
     if TempfaceBoxes:
-        for i in range(len(TempfaceBoxes)):
-            #если это не 1ый кадр, в котором нашли лицо, а =>2, в котором также нашли лицо, то
+        ssize = len(TempfaceBoxes)
+        different = ssize - len(faceBoxes)
+        for i in range(ssize):
+            #если это не 1ый кадр, в котором нашли лицо, а 2 или больше, в котором также нашли лицо, то
             if iii > 0:
                 Xcentroid, Ycentroid = TempfaceBoxes[i]
-                min_rad = int(find_correct(Xcentroid, Ycentroid))
-                faceBoxes[min_rad] = (Xcentroid, Ycentroid)
-                chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik)
-                #schetchik = chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik)
-                cv2.putText(frameOpencvDnn, str(min_rad), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+                #если лиц стало больше чем было, то новым лицам не нужно перезаписывать координаты
+                if different > 0:
+                    xxx, yyy = find_correct(frameOpencvDnn, Xcentroid, Ycentroid, i)
+                    schetchik = chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
+                #если лиц стало столько же или меньше, чем было
+                else:
+                    xxx, yyy = find_correct(frameOpencvDnn, Xcentroid, Ycentroid)
+                    schetchik = chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
             #для 1 кадра
             else:
                 faceBoxes[i]=TempfaceBoxes[i]
                 cv2.putText(frameOpencvDnn, str(i), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+        #пока что не решил вопросы связанные с:
+        #2.очищением ячеек массива faceBoxes
+        #4. САМОЕ ГЛАВНОЕ: корректность распознавания множества людей(эта задача для распознавания 1 человека решена)
 
         iii += 1
+    else:
+        iii = 0
+        #print("The frame is disrupted or there are no people")
     
-    return frameOpencvDnn, TempfaceBoxes, iii
+    return frameOpencvDnn, TempfaceBoxes, iii, schetchik
 
 # загружаем веса для распознавания лиц
 faceProto="opencv_face_detector.pbtxt"
@@ -172,7 +187,7 @@ iii=int(0)
 #счетчик(отрицательные значения возможны, тут просто считает баланс вошедших-вышедших)
 schetchik=int(0)
 while cv2.waitKey(198)<0:
-
+    #home()
     # получаем очередной кадр с камеры
     hasFrame,frame=video.read()
     # если кадра нет
@@ -182,11 +197,11 @@ while cv2.waitKey(198)<0:
         break
     
     # распознаём лица в кадре
-    resultImg, TempfaceBoxes, iii = highlightFace(faceNet, frame, iii, schetchik)
+    resultImg, TempfaceBoxes, iii, schetchik = highlightFace(faceNet, frame, iii, schetchik)
     
     #если лиц нет
-    if not TempfaceBoxes:
+    #if not TempfaceBoxes:
         # выводим в консоли, что лицо не найдено
-        print("I dont see any faces")
+        #print("I dont see any faces")
     # выводим картинку с камеры
     cv2.imshow("zxc", resultImg)
