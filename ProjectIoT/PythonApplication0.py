@@ -1,21 +1,6 @@
 # подключаем библиотеку компьютерного зрения 
 import cv2
 import scipy.spatial.distance
-#from flask import Flask
-
-#app = Flask(__name__)
-
-#counter = 0
-
-#@app.route('/')
-#def home():
-#    global counter
-#    counter += 1
-#    return f'Counter: {counter}'
-
-#if __name__ == '__main__':
-#    app.run()
-
 print(cv2.__version__)
 #Условимся, что лицо не может двигаться по "наблюдаемой" "площади" 10х10 метров
 #быстрее чем 300м/с, а само лицо условно покажется за 3 секунды на камере 90 раз
@@ -44,15 +29,23 @@ def chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, 
     #если точка была в предыдущем кадре выше прямой, а в текущем находится ниже прямой = прошла черту
     if boolean1 and boolean2:
         schetchik += 1
+        count = str(schetchik)
+        with open("example.txt", "w") as file:
+            file.write(count)
         print("Proshel vniz!!! ", schetchik)
     return schetchik
 
 #если координата выше черты в новом кадре, то чел прошёл вверх
-#def chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik):
-#    if (Xcentroid * frameHeight * 0.15 - Xcentroid * frameHeight * 0.85 + Ycentroid * frameWidth - frameWidth * frameHeight * 0.15 < 0):
-#        schetchik -= 1
-#        print("Proshel vverh!!! ", schetchik)
-#    return schetchik
+def chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy):
+    boolean1 = 0.7 * Xcentroid * frameHeight - Ycentroid * frameWidth + 0.15 * frameHeight * frameWidth >= 0
+    boolean2 = 0.7 * xxx * frameHeight - yyy * frameWidth + 0.15 * frameHeight * frameWidth < 0
+    if boolean1 and boolean2:
+        schetchik -= 1
+        count = str(schetchik)
+        with open("example.txt", "w") as file:
+            file.write(count)
+        print("Proshel vniz!!! ", schetchik)
+    return schetchik
 
 #для поиска ближайшего
 def find_correct(frameOpencvDnn, Xcentroid, Ycentroid, iteration_number = int(-1)):
@@ -146,17 +139,19 @@ def highlightFace(net, frame, iii, schetchik, conf_threshold=0.7):
                 if different > 0:
                     xxx, yyy = find_correct(frameOpencvDnn, Xcentroid, Ycentroid, i)
                     schetchik = chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
+                    schetchik = chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
                 #если лиц стало столько же или меньше, чем было
                 else:
                     xxx, yyy = find_correct(frameOpencvDnn, Xcentroid, Ycentroid)
                     schetchik = chel_proshel_vniz(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
+                    schetchik = chel_proshel_vverh(Xcentroid, Ycentroid, frameWidth, frameHeight, schetchik, xxx, yyy)
             #для 1 кадра
             else:
                 faceBoxes[i]=TempfaceBoxes[i]
                 cv2.putText(frameOpencvDnn, str(i), (Xcentroid+5, Ycentroid), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
         #пока что не решил вопросы связанные с:
         #2.очищением ячеек массива faceBoxes
-        #4. САМОЕ ГЛАВНОЕ: корректность распознавания множества людей(эта задача для распознавания 1 человека решена)
+        #4. САМОЕ ГЛАВНОЕ: корректность распознавания множества людей (вопрос решен на 99.997% =) )
 
         iii += 1
     else:
@@ -169,25 +164,21 @@ def highlightFace(net, frame, iii, schetchik, conf_threshold=0.7):
 faceProto="opencv_face_detector.pbtxt"
 # и конфигурацию самой нейросети — слои и связи нейронов
 faceModel="opencv_face_detector_uint8.pb"
-#faceProto="MobileNetSSD_deploy.prototxt"
-## и конфигурацию самой нейросети — слои и связи нейронов
-#faceModel="MobileNetSSD_deploy.caffemodel"
 # запускаем нейросеть по распознаванию лиц
 faceNet=cv2.dnn.readNet(faceModel,faceProto)
 # ОСНОВНОЙ ЦИКЛ ПРОГРАММЫ. Получаем видео с камеры
 video=cv2.VideoCapture(0)
+#для 1ого кадра(если будет срыв кадров либо в кадре никого не будет, то в ХайлйатФейс прога зайдет в ветку 1ого кадра)
+iii=int(0)
+#счетчик(отрицательные значения возможны, тут просто считает баланс вошедших-вышедших)
+schetchik=int(0)
+count = ""
  #пока не нажата любая клавиша — выполняем цикл
  #если увеличивать параметр waitKey(х), то в значительной степени снижается нагрузка на ЦП 
  #х - количество миллисекунд дилея одного цикла. В данном примере если поставтить 33
  #(эквивалент для камеры 30fps), то нагрузка на ЦП падает с 55%+-4% до 41%+-2%
  #формула для расчета: х=1000/у, где у - количество  необходимых кадров в секунду
-
-#для контейнера
-iii=int(0)
-#счетчик(отрицательные значения возможны, тут просто считает баланс вошедших-вышедших)
-schetchik=int(0)
-while cv2.waitKey(198)<0:
-    #home()
+while cv2.waitKey(33)<0:
     # получаем очередной кадр с камеры
     hasFrame,frame=video.read()
     # если кадра нет
